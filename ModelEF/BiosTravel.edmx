@@ -1,0 +1,662 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BiosTravelModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="usuario" />
+          </Key>
+          <Property Name="usuario" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="passUsu" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombreCompleto" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="pais" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="activoE" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hospedajes">
+          <Key>
+            <PropertyRef Name="codigoInterno" />
+          </Key>
+          <Property Name="codigoInterno" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="calle" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="localidad" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="precioH" Type="float" Nullable="false" />
+          <Property Name="tipoH" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="activoH" Type="bit" Nullable="false" />
+          <Property Name="estadoCodigo" Type="varchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Incluyen">
+          <Key>
+            <PropertyRef Name="codigoH" />
+            <PropertyRef Name="codigoPV" />
+          </Key>
+          <Property Name="codigoH" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="codigoPV" Type="int" Nullable="false" />
+          <Property Name="cantNoches" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaquetesViajes">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="descripcion" Type="varchar(max)" Nullable="false" />
+          <Property Name="cantidadDiasP" Type="int" Nullable="false" />
+          <Property Name="precioIndividual" Type="float" Nullable="false" />
+          <Property Name="precioDosP" Type="float" Nullable="false" />
+          <Property Name="precioTresP" Type="float" Nullable="false" />
+          <Property Name="empleadoU" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="vueloIC" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="vueloVC" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="estadoPVC" Type="varchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vuelos">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="fechaHoraP" Type="datetime" Nullable="false" />
+          <Property Name="fechaHoraL" Type="datetime" Nullable="false" />
+          <Property Name="precioV" Type="float" Nullable="false" />
+          <Property Name="activoV" Type="bit" Nullable="false" />
+          <Property Name="estadoPartidaC" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="estadoArriboC" Type="varchar" MaxLength="4" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Hospedaje__estad__4AB81AF0">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Hospedajes" Type="Self.Hospedajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="Hospedajes">
+              <PropertyRef Name="estadoCodigo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incluyen__codigo__5812160E">
+          <End Role="Hospedajes" Type="Self.Hospedajes" Multiplicity="1" />
+          <End Role="Incluyen" Type="Self.Incluyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospedajes">
+              <PropertyRef Name="codigoInterno" />
+            </Principal>
+            <Dependent Role="Incluyen">
+              <PropertyRef Name="codigoH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incluyen__codigo__59063A47">
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="1" />
+          <End Role="Incluyen" Type="Self.Incluyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaquetesViajes">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="Incluyen">
+              <PropertyRef Name="codigoPV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaquetesV__emple__4F7CD00D">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleados">
+              <PropertyRef Name="usuario" />
+            </Principal>
+            <Dependent Role="PaquetesViajes">
+              <PropertyRef Name="empleadoU" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaquetesV__estad__52593CB8">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="PaquetesViajes">
+              <PropertyRef Name="estadoPVC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaquetesV__vuelo__5070F446">
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vuelos">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="PaquetesViajes">
+              <PropertyRef Name="vueloIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaquetesV__vuelo__5165187F">
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vuelos">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="PaquetesViajes">
+              <PropertyRef Name="vueloVC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vuelos__estadoAr__4316F928">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="Vuelos">
+              <PropertyRef Name="estadoArriboC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vuelos__estadoPa__4222D4EF">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="Vuelos">
+              <PropertyRef Name="estadoPartidaC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AltaEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="pais" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AltaHospedaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoInterno" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="calle" Type="varchar" Mode="In" />
+          <Parameter Name="localidad" Type="varchar" Mode="In" />
+          <Parameter Name="precioH" Type="float" Mode="In" />
+          <Parameter Name="tipoH" Type="varchar" Mode="In" />
+          <Parameter Name="estadoCodigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AltaIncluyen" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoH" Type="varchar" Mode="In" />
+          <Parameter Name="codigoPV" Type="int" Mode="In" />
+          <Parameter Name="cantNoches" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AltaPaquetesViajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="titulo" Type="varchar" Mode="In" />
+          <Parameter Name="descripcion" Type="varchar(max)" Mode="In" />
+          <Parameter Name="cantidadDiasP" Type="int" Mode="In" />
+          <Parameter Name="precioIndividual" Type="float" Mode="In" />
+          <Parameter Name="precioDosP" Type="float" Mode="In" />
+          <Parameter Name="precioTresP" Type="float" Mode="In" />
+          <Parameter Name="empleadoU" Type="varchar" Mode="In" />
+          <Parameter Name="vueloIC" Type="varchar" Mode="In" />
+          <Parameter Name="vueloVC" Type="varchar" Mode="In" />
+          <Parameter Name="estadoPVC" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="AltaVuelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="fechaHoraP" Type="datetime" Mode="In" />
+          <Parameter Name="fechaHoraL" Type="datetime" Mode="In" />
+          <Parameter Name="precioV" Type="float" Mode="In" />
+          <Parameter Name="estadoPartidaC" Type="varchar" Mode="In" />
+          <Parameter Name="estadoArriboC" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BajaEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BajaHospedaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BajaVuelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BuscarEmpleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usuario" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BuscarEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BuscarHospedaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BuscarTodosEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BuscarTodosHospedajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BuscarTodosVuelos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="BuscarVuelos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ListarEmpleados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ListarEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ListarHospedajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ListarIncluyenDePV" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoPV" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ListarPaquetesViajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="ListarPaquetesViajesXHospedajes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoH" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ListarVuelos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Logueo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usu" Type="varchar" Mode="In" />
+          <Parameter Name="pass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModificarEmpleado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usuario" Type="varchar" Mode="In" />
+          <Parameter Name="passUsu" Type="varchar" Mode="In" />
+          <Parameter Name="nombreCompleto" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModificarEstado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="pais" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModificarHospedaje" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigoInterno" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="calle" Type="varchar" Mode="In" />
+          <Parameter Name="localidad" Type="varchar" Mode="In" />
+          <Parameter Name="precioH" Type="float" Mode="In" />
+          <Parameter Name="tipoH" Type="varchar" Mode="In" />
+          <Parameter Name="estadoCodigo" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModificarVuelo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+          <Parameter Name="fechaHoraP" Type="datetime" Mode="In" />
+          <Parameter Name="fechaHoraL" Type="datetime" Mode="In" />
+          <Parameter Name="precioV" Type="float" Mode="In" />
+          <Parameter Name="estadoPartidaC" Type="varchar" Mode="In" />
+          <Parameter Name="estadoArriboC" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="NuevoUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="usuario" Type="varchar" Mode="In" />
+          <Parameter Name="passUsu" Type="varchar" Mode="In" />
+          <Parameter Name="nomCompleto" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="BiosTravelModelStoreContainer">
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estados" EntityType="Self.Estados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospedajes" EntityType="Self.Hospedajes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incluyen" EntityType="Self.Incluyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaquetesViajes" EntityType="Self.PaquetesViajes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vuelos" EntityType="Self.Vuelos" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Hospedaje__estad__4AB81AF0" Association="Self.FK__Hospedaje__estad__4AB81AF0">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Hospedajes" EntitySet="Hospedajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incluyen__codigo__5812160E" Association="Self.FK__Incluyen__codigo__5812160E">
+            <End Role="Hospedajes" EntitySet="Hospedajes" />
+            <End Role="Incluyen" EntitySet="Incluyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incluyen__codigo__59063A47" Association="Self.FK__Incluyen__codigo__59063A47">
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+            <End Role="Incluyen" EntitySet="Incluyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaquetesV__emple__4F7CD00D" Association="Self.FK__PaquetesV__emple__4F7CD00D">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaquetesV__estad__52593CB8" Association="Self.FK__PaquetesV__estad__52593CB8">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaquetesV__vuelo__5070F446" Association="Self.FK__PaquetesV__vuelo__5070F446">
+            <End Role="Vuelos" EntitySet="Vuelos" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaquetesV__vuelo__5165187F" Association="Self.FK__PaquetesV__vuelo__5165187F">
+            <End Role="Vuelos" EntitySet="Vuelos" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vuelos__estadoAr__4316F928" Association="Self.FK__Vuelos__estadoAr__4316F928">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Vuelos" EntitySet="Vuelos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vuelos__estadoPa__4222D4EF" Association="Self.FK__Vuelos__estadoPa__4222D4EF">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Vuelos" EntitySet="Vuelos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BiosTravelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Empleados">
+          <Key>
+            <PropertyRef Name="usuario" />
+          </Key>
+          <Property Name="usuario" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passUsu" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombreCompleto" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="String" MaxLength="4" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pais" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="activoE" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hospedajes">
+          <Key>
+            <PropertyRef Name="codigoInterno" />
+          </Key>
+          <Property Name="codigoInterno" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="calle" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="localidad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precioH" Type="Double" Nullable="false" />
+          <Property Name="tipoH" Type="String" MaxLength="13" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="activoH" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Hospedaje__estad__4AB81AF0" FromRole="Hospedajes" ToRole="Estados" />
+        </EntityType>
+        <EntityType Name="Incluyen">
+          <Key>
+            <PropertyRef Name="codigoH" />
+            <PropertyRef Name="codigoPV" />
+          </Key>
+          <Property Name="codigoH" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codigoPV" Type="Int32" Nullable="false" />
+          <Property Name="cantNoches" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hospedajes" Relationship="Self.FK__Incluyen__codigo__5812160E" FromRole="Incluyen" ToRole="Hospedajes" />
+        </EntityType>
+        <EntityType Name="PaquetesViajes">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cantidadDiasP" Type="Int32" Nullable="false" />
+          <Property Name="precioIndividual" Type="Double" Nullable="false" />
+          <Property Name="precioDosP" Type="Double" Nullable="false" />
+          <Property Name="precioTresP" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Empleados" Relationship="Self.FK__PaquetesV__emple__4F7CD00D" FromRole="PaquetesViajes" ToRole="Empleados" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__PaquetesV__estad__52593CB8" FromRole="PaquetesViajes" ToRole="Estados" />
+          <NavigationProperty Name="Incluyen" Relationship="Self.FK__Incluyen__codigo__59063A47" FromRole="PaquetesViajes" ToRole="Incluyen" />
+          <NavigationProperty Name="VuelosI" Relationship="Self.FK__PaquetesV__vuelo__5070F446" FromRole="PaquetesViajes" ToRole="Vuelos" />
+          <NavigationProperty Name="VuelosV" Relationship="Self.FK__PaquetesV__vuelo__5165187F" FromRole="PaquetesViajes" ToRole="Vuelos" />
+        </EntityType>
+        <EntityType Name="Vuelos">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fechaHoraP" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fechaHoraL" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="precioV" Type="Double" Nullable="false" />
+          <Property Name="activoV" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EstadosA" Relationship="Self.FK__Vuelos__estadoAr__4316F928" FromRole="Vuelos" ToRole="Estados" />
+          <NavigationProperty Name="EstadosP" Relationship="Self.FK__Vuelos__estadoPa__4222D4EF" FromRole="Vuelos" ToRole="Estados" />
+        </EntityType>
+        <Association Name="FK__PaquetesV__emple__4F7CD00D">
+          <End Role="Empleados" Type="Self.Empleados" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Hospedaje__estad__4AB81AF0">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Hospedajes" Type="Self.Hospedajes" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__PaquetesV__estad__52593CB8">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Vuelos__estadoAr__4316F928">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Vuelos__estadoPa__4222D4EF">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__Incluyen__codigo__5812160E">
+          <End Role="Hospedajes" Type="Self.Hospedajes" Multiplicity="1" />
+          <End Role="Incluyen" Type="Self.Incluyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospedajes">
+              <PropertyRef Name="codigoInterno" />
+            </Principal>
+            <Dependent Role="Incluyen">
+              <PropertyRef Name="codigoH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incluyen__codigo__59063A47">
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="1" />
+          <End Role="Incluyen" Type="Self.Incluyen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaquetesViajes">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="Incluyen">
+              <PropertyRef Name="codigoPV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaquetesV__vuelo__5070F446">
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+        </Association>
+        <Association Name="FK__PaquetesV__vuelo__5165187F">
+          <End Role="Vuelos" Type="Self.Vuelos" Multiplicity="1" />
+          <End Role="PaquetesViajes" Type="Self.PaquetesViajes" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BiosTravelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Empleados" EntityType="Self.Empleados" />
+          <EntitySet Name="Estados" EntityType="Self.Estados" />
+          <EntitySet Name="Hospedajes" EntityType="Self.Hospedajes" />
+          <EntitySet Name="Incluyen" EntityType="Self.Incluyen" />
+          <EntitySet Name="PaquetesViajes" EntityType="Self.PaquetesViajes" />
+          <EntitySet Name="Vuelos" EntityType="Self.Vuelos" />
+          <AssociationSet Name="FK__PaquetesV__emple__4F7CD00D" Association="Self.FK__PaquetesV__emple__4F7CD00D">
+            <End Role="Empleados" EntitySet="Empleados" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedaje__estad__4AB81AF0" Association="Self.FK__Hospedaje__estad__4AB81AF0">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Hospedajes" EntitySet="Hospedajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaquetesV__estad__52593CB8" Association="Self.FK__PaquetesV__estad__52593CB8">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vuelos__estadoAr__4316F928" Association="Self.FK__Vuelos__estadoAr__4316F928">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Vuelos" EntitySet="Vuelos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vuelos__estadoPa__4222D4EF" Association="Self.FK__Vuelos__estadoPa__4222D4EF">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Vuelos" EntitySet="Vuelos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incluyen__codigo__5812160E" Association="Self.FK__Incluyen__codigo__5812160E">
+            <End Role="Hospedajes" EntitySet="Hospedajes" />
+            <End Role="Incluyen" EntitySet="Incluyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incluyen__codigo__59063A47" Association="Self.FK__Incluyen__codigo__59063A47">
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+            <End Role="Incluyen" EntitySet="Incluyen" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaquetesV__vuelo__5070F446" Association="Self.FK__PaquetesV__vuelo__5070F446">
+            <End Role="Vuelos" EntitySet="Vuelos" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaquetesV__vuelo__5165187F" Association="Self.FK__PaquetesV__vuelo__5165187F">
+            <End Role="Vuelos" EntitySet="Vuelos" />
+            <End Role="PaquetesViajes" EntitySet="PaquetesViajes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BiosTravelModelStoreContainer" CdmEntityContainer="BiosTravelEntities">
+          <EntitySetMapping Name="Empleados">
+            <EntityTypeMapping TypeName="BiosTravelModel.Empleados">
+              <MappingFragment StoreEntitySet="Empleados">
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
+                <ScalarProperty Name="passUsu" ColumnName="passUsu" />
+                <ScalarProperty Name="nombreCompleto" ColumnName="nombreCompleto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estados">
+            <EntityTypeMapping TypeName="BiosTravelModel.Estados">
+              <MappingFragment StoreEntitySet="Estados">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="pais" ColumnName="pais" />
+                <ScalarProperty Name="activoE" ColumnName="activoE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospedajes">
+            <EntityTypeMapping TypeName="BiosTravelModel.Hospedajes">
+              <MappingFragment StoreEntitySet="Hospedajes">
+                <ScalarProperty Name="codigoInterno" ColumnName="codigoInterno" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="calle" ColumnName="calle" />
+                <ScalarProperty Name="localidad" ColumnName="localidad" />
+                <ScalarProperty Name="precioH" ColumnName="precioH" />
+                <ScalarProperty Name="tipoH" ColumnName="tipoH" />
+                <ScalarProperty Name="activoH" ColumnName="activoH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incluyen">
+            <EntityTypeMapping TypeName="BiosTravelModel.Incluyen">
+              <MappingFragment StoreEntitySet="Incluyen">
+                <ScalarProperty Name="codigoH" ColumnName="codigoH" />
+                <ScalarProperty Name="codigoPV" ColumnName="codigoPV" />
+                <ScalarProperty Name="cantNoches" ColumnName="cantNoches" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaquetesViajes">
+            <EntityTypeMapping TypeName="BiosTravelModel.PaquetesViajes">
+              <MappingFragment StoreEntitySet="PaquetesViajes">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="cantidadDiasP" ColumnName="cantidadDiasP" />
+                <ScalarProperty Name="precioIndividual" ColumnName="precioIndividual" />
+                <ScalarProperty Name="precioDosP" ColumnName="precioDosP" />
+                <ScalarProperty Name="precioTresP" ColumnName="precioTresP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vuelos">
+            <EntityTypeMapping TypeName="BiosTravelModel.Vuelos">
+              <MappingFragment StoreEntitySet="Vuelos">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="fechaHoraP" ColumnName="fechaHoraP" />
+                <ScalarProperty Name="fechaHoraL" ColumnName="fechaHoraL" />
+                <ScalarProperty Name="precioV" ColumnName="precioV" />
+                <ScalarProperty Name="activoV" ColumnName="activoV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK__PaquetesV__emple__4F7CD00D" TypeName="BiosTravelModel.FK__PaquetesV__emple__4F7CD00D" StoreEntitySet="PaquetesViajes">
+            <EndProperty Name="Empleados">
+              <ScalarProperty Name="usuario" ColumnName="empleadoU" />
+            </EndProperty>
+            <EndProperty Name="PaquetesViajes">
+              <ScalarProperty Name="codigo" ColumnName="codigo" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__Hospedaje__estad__4AB81AF0" TypeName="BiosTravelModel.FK__Hospedaje__estad__4AB81AF0" StoreEntitySet="Hospedajes">
+            <EndProperty Name="Estados">
+              <ScalarProperty Name="codigo" ColumnName="estadoCodigo" />
+            </EndProperty>
+            <EndProperty Name="Hospedajes">
+              <ScalarProperty Name="codigoInterno" ColumnName="codigoInterno" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__PaquetesV__estad__52593CB8" TypeName="BiosTravelModel.FK__PaquetesV__estad__52593CB8" StoreEntitySet="PaquetesViajes">
+            <EndProperty Name="Estados">
+              <ScalarProperty Name="codigo" ColumnName="estadoPVC" />
+            </EndProperty>
+            <EndProperty Name="PaquetesViajes">
+              <ScalarProperty Name="codigo" ColumnName="codigo" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__Vuelos__estadoAr__4316F928" TypeName="BiosTravelModel.FK__Vuelos__estadoAr__4316F928" StoreEntitySet="Vuelos">
+            <EndProperty Name="Estados">
+              <ScalarProperty Name="codigo" ColumnName="estadoArriboC" />
+            </EndProperty>
+            <EndProperty Name="Vuelos">
+              <ScalarProperty Name="codigo" ColumnName="codigo" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__Vuelos__estadoPa__4222D4EF" TypeName="BiosTravelModel.FK__Vuelos__estadoPa__4222D4EF" StoreEntitySet="Vuelos">
+            <EndProperty Name="Estados">
+              <ScalarProperty Name="codigo" ColumnName="estadoPartidaC" />
+            </EndProperty>
+            <EndProperty Name="Vuelos">
+              <ScalarProperty Name="codigo" ColumnName="codigo" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__PaquetesV__vuelo__5070F446" TypeName="BiosTravelModel.FK__PaquetesV__vuelo__5070F446" StoreEntitySet="PaquetesViajes">
+            <EndProperty Name="Vuelos">
+              <ScalarProperty Name="codigo" ColumnName="vueloIC" />
+            </EndProperty>
+            <EndProperty Name="PaquetesViajes">
+              <ScalarProperty Name="codigo" ColumnName="codigo" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK__PaquetesV__vuelo__5165187F" TypeName="BiosTravelModel.FK__PaquetesV__vuelo__5165187F" StoreEntitySet="PaquetesViajes">
+            <EndProperty Name="Vuelos">
+              <ScalarProperty Name="codigo" ColumnName="vueloVC" />
+            </EndProperty>
+            <EndProperty Name="PaquetesViajes">
+              <ScalarProperty Name="codigo" ColumnName="codigo" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

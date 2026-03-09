@@ -1,0 +1,33 @@
+# Build y Binarios
+[bin]
+[obj]
+bin/
+obj/
+/TestResults/
+
+# Visual Studio (Configuraciones de usuario y caché)
+.vs/
+*.user
+*.suo
+*.sln.docstates
+*.clw
+*.db
+*.opendb
+
+# NuGet
+packages/
+!packages/build/ # A veces necesario para MSBuild
+node_modules/
+
+# Entity Framework y Bases de Datos locales
+*.mdf
+*.ldf
+*.sdf
+App_Data/*.mdf
+App_Data/*.ldf
+
+# Archivos de publicación y temporales
+*.log
+*.cache
+*.pdb
+/Publish/

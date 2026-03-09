@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Alta Paquete Viaje";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Alta Paquete Viaje - Paso 2</h2>
+@ViewBag.Mensaje
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Selección de Vuelos</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Vuelo Ida", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("vueloIda", (SelectList)ViewBag.ListaVuelosIda)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Vuelo Vuelta", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("vueloVuelta", (SelectList)ViewBag.ListaVuelosVuelta)
+        </div>
+    </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ir a Paso 3" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+

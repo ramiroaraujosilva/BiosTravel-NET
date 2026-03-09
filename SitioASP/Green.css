@@ -1,0 +1,118 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo general */
+body {
+    font-family: Segoe UI, Arial, sans-serif;
+    background-color: #f5f7f5;
+    color: #222;
+    padding: 30px;
+}
+
+/* Contenedor principal */
+.container {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 30px;
+    width: 500px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Títulos */
+h1, h2, h3 {
+    color: #1b7f3a;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+    font-weight: 600;
+    display: block;
+    margin-top: 12px;
+}
+
+/* Inputs */
+input[type=text],
+input[type=password],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid black;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+    /* Focus moderno */
+    input:focus,
+    select:focus {
+        outline: none;
+        border-color: #1b7f3a;
+        box-shadow: 0 0 5px rgba(27,127,58,0.4);
+    }
+
+/* Botones */
+button,
+input[type=submit] {
+    background-color: #1b7f3a;
+    color: white;
+    border: 2px solid black;
+    padding: 10px 18px;
+    margin-top: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+    /* Hover botón */
+    button:hover,
+    input[type=submit]:hover {
+        background-color: #145c2a;
+    }
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Cabecera tabla */
+th {
+    background-color: #1b7f3a;
+    color: white;
+    border: 2px solid black;
+    padding: 10px;
+}
+
+/* Celdas */
+td {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+/* Filas alternadas */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Mensajes */
+.mensaje {
+    margin-top: 15px;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: #e9f6ee;
+    color: #1b7f3a;
+    border-radius: 5px;
+}
+
+.ddlEstados {
+    width: 250px;
+    padding: 4px;
+}

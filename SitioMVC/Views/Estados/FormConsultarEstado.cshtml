@@ -1,0 +1,41 @@
+﻿@model Entidades_Compartidas.Estados
+
+@{
+    ViewBag.Title = "Consultar Estado";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Consulta de Estado</h2>
+@ViewBag.Mensaje
+@Html.ActionLink("Volver al Listado de Estados", "FormListarEstados")
+
+<div>
+    <h4>Estados</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pais)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pais)
+        </dd>
+
+    </dl>
+</div>

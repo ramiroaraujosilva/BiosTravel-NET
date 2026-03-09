@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Entidades_Compartidas.Vuelos>
+
+@{
+    ViewBag.Title = "Listar Vuelos";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Listar Vuelos</h2>
+@ViewBag.Mensaje
+
+<p>
+    @Html.ActionLink("Nuevo Vuelo", "FormAltaVuelo")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div class="form-actions no-color">
+        <div>
+            @Html.TextBox("DatoFiltro", "")
+            <input type="submit" value="Filtrar" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaHoraP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaHoraL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioV)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Entidades_Compartidas.Vuelos unV in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => unV.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unV.FechaHoraP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unV.FechaHoraL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unV.PrecioV)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "FormModificarVuelo", new { unV.Codigo }) |
+                @Html.ActionLink("Consultar", "FormConsultarVuelo", new { unV.Codigo }) |
+                @Html.ActionLink("Eliminar", "FormBajaVuelo", new { unV.Codigo })
+            </td>
+        </tr>
+    }
+
+</table>

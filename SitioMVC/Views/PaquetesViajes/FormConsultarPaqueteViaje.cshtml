@@ -1,0 +1,112 @@
+﻿@model Entidades_Compartidas.PaquetesViajes
+
+@{
+    ViewBag.Title = "Consulta Paquete Viaje";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Consulta Paquete Viaje</h2>
+@ViewBag.Mensaje
+
+@Html.ActionLink("Volver al Listado de Paquetes Viajes", "FormListarPaquetesViajes")
+
+<div>
+    <h4>Paquete Viaje</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Titulo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CantidadDiasP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CantidadDiasP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioIndividual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioIndividual)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioDosP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioDosP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioTresP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioTresP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VueloIda)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VueloIda.VueloInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VueloVuelta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VueloVuelta.VueloInfo)
+        </dd>
+    </dl>
+
+    <table class="table">
+        <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Cantidad de noches</th>
+        </tr>
+
+        @foreach (var inc in Model.IncluyenHospedajes)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => inc.Hospedaje.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => inc.Hospedaje.Estado.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => inc.CantNoches)
+        </td>
+    </tr>}
+    </table>      
+
+</div>

@@ -1,0 +1,84 @@
+﻿@model Entidades_Compartidas.Hospedajes
+
+@{
+    ViewBag.Title = "Baja de Hospedaje";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Baja de Hospedaje</h2>
+@ViewBag.Mensaje
+
+@Html.ActionLink("Volver al Listado de Hospedajes", "FormListarCRUDHospedajes")
+
+<h3>¿Está seguro que desea eliminarlo?</h3>
+<div>
+    <h4>Hospedajes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoInterno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodigoInterno)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Calle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Calle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Localidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Localidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" />
+        </div>
+    }
+</div>

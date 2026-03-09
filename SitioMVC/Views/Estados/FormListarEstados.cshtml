@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Entidades_Compartidas.Estados>
+
+@{
+    ViewBag.Title = "Lista de Estados";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Lista de Estados</h2>
+
+
+<p>
+    @ViewBag.Mensaje
+    @Html.ActionLink("Nuevo Estado", "FormAltaEstado")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div class="form-actions no-color">
+        <div>
+            @Html.TextBox("DatoFiltro", "")
+            <input type="submit" value="Filtrar por País" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pais)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Entidades_Compartidas.Estados unE in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => unE.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unE.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unE.Pais)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "FormModificarEstado", new { unE.Codigo }) |
+                @Html.ActionLink("Consultar", "FormConsultarEstado", new { unE.Codigo }) |
+                @Html.ActionLink("Eliminar", "FormBajaEstado", new { unE.Codigo })
+            </td>
+        </tr>
+    }
+
+</table>

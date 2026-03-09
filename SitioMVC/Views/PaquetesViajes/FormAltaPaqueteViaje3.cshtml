@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Alta Paquete Viaje";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Alta Paquete Viaje - Paso 3</h2>
+@ViewBag.Mensaje
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Agregar Hospedajes</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Hospedaje", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("CodigoInterno", (SelectList)ViewBag.ListaHospedajes)
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Cantidad de noches", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("CantNoches", null, new { type = "number", min = "1" })
+        </div>
+    </div>    
+
+    <br />
+
+    <h3>Hospedajes agregados</h3>  
+    
+        <table class="table">
+
+            <tr>
+                <th>Hospedaje</th>
+                <th>Precio</th>
+                <th>Noches</th>
+            </tr>
+
+            @foreach (Entidades_Compartidas.Incluyen inc in ((Entidades_Compartidas.PaquetesViajes)Session["Paquete"] ).IncluyenHospedajes )
+            {
+                <tr>
+                    <td>@inc.Hospedaje.Nombre</td>
+                    <td>@inc.Hospedaje.PrecioH</td>
+                    <td>@inc.CantNoches</td>
+                    
+                </tr>
+            }
+
+        </table>
+    
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Agregar Hospedaje" class="btn btn-default" />
+            @Html.ActionLink("Dar alta Paquete", "GuardarPaquete", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+}

@@ -1,0 +1,53 @@
+﻿@model Entidades_Compartidas.Empleados
+
+@{
+    ViewBag.Title = "Modificar Empleado";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Modificar Empleado</h2>
+@ViewBag.Mensaje
+@Html.ActionLink("Volver a Mantenimiento de Empleados", "MantenimientoEmpleados")
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Empleados</h4>
+    <hr />    
+    <table>
+        <tr>
+            <th>@Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })</th>
+            <td>@Html.DisplayFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })</td>
+        </tr>
+        <tr>
+            <th>@Html.LabelFor(model => model.PassUsu, htmlAttributes: new { @class = "control-label col-md-2" })</th>
+            <td>
+                @Html.PasswordFor(model => model.PassUsu, new { @readonly = "readonly", value = Model.PassUsu })</td>
+        </tr>
+        <tr>
+            <th> Contraseña actual: </th>
+            <td> @Html.Password("passActual", "")</td>
+        </tr>
+        <tr>
+            <th> Nueva contraseña: </th>
+            <td> @Html.Password("nuevaPass", "")</td>
+        </tr>
+        <tr>
+            <th> Confirmar contraseña: </th>
+            <td> @Html.Password("confirmarPass", "")</td>
+        </tr>
+        <tr>
+            <th>@Html.LabelFor(model => model.NombreCompleto, htmlAttributes: new { @class = "control-label col-md-2" })</th>
+            <td>@Html.TextBoxFor(model => model.NombreCompleto, new { htmlAttributes = new { @class = "form-control" } })</td>
+        </tr>
+    </table>    
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Modificar" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Entidades_Compartidas.PaquetesViajes>
+
+@{
+    ViewBag.Title = "Listado de Paquetes Viajes";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Listado de Paquetes Viajes</h2>
+@ViewBag.Mensaje
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CantidadDiasP)
+        </th>
+        
+    </tr>
+
+@foreach (Entidades_Compartidas.PaquetesViajes unPV in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => unPV.Codigo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => unPV.Titulo)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => unPV.Estado.Nombre)
+        </td> 
+        <td>
+            @Html.DisplayFor(modelItem => unPV.CantidadDiasP)
+        </td>        
+        <td>            
+            @Html.ActionLink("Consultar", "FormConsultarPaqueteViaje", new { unPV.Codigo })            
+        </td>
+    </tr>
+}
+
+</table>

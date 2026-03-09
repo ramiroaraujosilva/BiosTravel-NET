@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Entidades_Compartidas.Empleados>
+
+@{
+    ViewBag.Title = "MantenimientoEmpleados";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Mantenimiento de Empleados</h2>
+
+<p>
+    @ViewBag.Mensaje
+    @Html.ActionLink("Nuevo Empleado", "FormAltaEmpleado")
+</p>
+
+@using (Html.BeginForm())
+{
+    <div class="form-actions no-color">
+        <div>
+            @Html.TextBox("DatoFiltro", "")
+            <input type="submit" value="Filtrar" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PassUsu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreCompleto)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (Entidades_Compartidas.Empleados unE in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => unE.Usuario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unE.NombreCompleto)
+            </td>
+            <td>
+                @Html.ActionLink("Modificar", "FormModificarEmpleado", new { unE.Usuario }) |
+                @Html.ActionLink("Consultar", "FormConsultarEmpleado", new { unE.Usuario }) |
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

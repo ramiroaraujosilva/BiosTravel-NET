@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Entidades_Compartidas.Hospedajes>
+
+@{
+    ViewBag.Title = "Lista de Hospedajes";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Lista de Hospedajes</h2>
+@ViewBag.Mensaje
+
+
+@using (Html.BeginForm())
+{
+    <div class="form-actions no-color">
+        <div>
+            @Html.TextBox("DatoFiltro", "")
+            <input type="submit" value="Filtrar por nombre" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CodigoInterno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>        
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoH)
+        </th>
+    </tr>
+
+    @foreach (Entidades_Compartidas.Hospedajes unH in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => unH.CodigoInterno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unH.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unH.Estado.Nombre)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => unH.PrecioH)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => unH.TipoH)
+            </td>
+            <td>                
+                @Html.ActionLink("Listar Paquetes asociados", "FormListarPVPorHospedaje", new { unH.CodigoInterno })                
+            </td>
+        </tr>
+    }
+
+</table>

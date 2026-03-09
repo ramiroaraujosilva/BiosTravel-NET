@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Entidades_Compartidas.PaquetesViajes>
+
+@{
+    ViewBag.Title = "Listado de Paquetes por Hospedaje";
+    Layout = "~/Views/Shared/_LayoutPage2.cshtml";
+}
+
+<h2>Listado de Paquetes por Hospedaje</h2>
+@ViewBag.Mensaje
+
+@Html.ActionLink("Volver al Listado de Hospedajes", "FormListarHospedajes")
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VueloIda)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CantidadDiasP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioIndividual)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioDosP)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PrecioTresP)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Titulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VueloIda.FechaHoraP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CantidadDiasP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioIndividual)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioDosP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioTresP)
+            </td>
+        </tr>
+    }
+
+</table>
